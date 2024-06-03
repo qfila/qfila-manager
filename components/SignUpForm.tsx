@@ -67,7 +67,7 @@ function SignUpForm() {
         username: name,
         email,
         password,
-        role: 'USER',
+        role: 'MANAGER',
       });
       showToast() 
       router.replace('/login')

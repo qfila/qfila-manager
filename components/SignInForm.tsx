@@ -6,8 +6,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Input } from './ui/inputs';
 import api from '@/modules/api';
 import { useRouter } from 'expo-router';
-import SecureStore from 'expo-secure-store';
 import { useAuthStore } from '@/store/useAuthStore';
+import { axiosErrorMessageHandler } from '@/utils';
 
 const yupSchema = yup.object({
   email: yup.string().email('Email inválido').required('Email é obrigatório.'),
@@ -57,13 +57,17 @@ function SignInForm() {
         password,
       });
 
-      // await SecureStore.setItemAsync('@qfila/auth_token', response.data.accessToken)
-      // await SecureStore.setItemAsync('@qfila/username', response.data.username)
+      const isManager = response.data.role === 'USER'
+      
+      if (isManager) {
+        setError('Credenciais inválidas')
+        return
+      }
+
       setToken(response.data.accessToken)
-      router.replace('/')
+      router.replace('/home')
     } catch (error) {
-      console.error(error);
-      setError('Erro inesperado na API')
+      setError(axiosErrorMessageHandler(error as Error))
     }
   };
 

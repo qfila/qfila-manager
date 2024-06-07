@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  // baseURL: 'http://localhost:3000'
-  baseURL: 'http://192.168.0.14:3000'
+  baseURL: 'https://qfila-gateway-service.onrender.com/'
 })
 
 export default api;

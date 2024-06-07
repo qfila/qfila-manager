@@ -7,6 +7,7 @@ import { Input } from './ui/inputs';
 import api from '@/modules/api';
 import Toast from 'react-native-toast-message';
 import { useRouter } from 'expo-router';
+import { axiosErrorMessageHandler } from '@/utils';
 
 const yupSchema = yup.object({
     name: yup
@@ -70,10 +71,9 @@ function SignUpForm() {
         role: 'MANAGER',
       });
       showToast() 
-      router.replace('/login')
+      router.replace('/')
     } catch (error) {
-      console.error(error);
-      setError('Erro inesperado na API')
+      setError(axiosErrorMessageHandler(error as Error))
     }
   };
 
